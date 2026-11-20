@@ -6,25 +6,11 @@ Simulación 3D del sistema solar en HTML5 + WebGL (Three.js). Las órbitas se
 calculan en tiempo real con elementos orbitales reales (J2000) y la ecuación de
 Kepler: no hay animaciones prefabricadas.
 
-## Publicar en Netlify
+## Publicación y Despliegue
 
-**Estado actual:** el sitio ya está publicado en
-**<https://firuhs07k5qvw.space.mcode.io>** (servido desde el almacenamiento
-web de MiniMax Code; el código fuente queda en almacenamiento privado).
-Para publicarlo en un dominio propio de Netlify, usa una de estas dos vías:
-
-**Opción A — arrastrar y soltar (la más rápida)**
-1. Entra en [app.netlify.com/drop](https://app.netlify.com/drop).
-2. Arrastra la carpeta `sistema-solar-3d` completa.
-3. Listo: te da una URL pública tipo `https://tu-sitio.netlify.app`.
-
-**Opción B — desde GitHub**
-1. Sube esta carpeta a un repositorio.
-2. En Netlify: *Add new site → Import an existing project*.
-3. Base directory: la carpeta del repo. Build command: (vacío). Publish directory: `.`
-   — o simplemente deja que Netlify lea el `netlify.toml` incluido.
-
-`netlify.toml` ya define `publish = "."` y la caché de `vendor/`.
+- **URL en Producción (Netlify):** <https://sistema-solar-3d-959.netlify.app>
+- **Repositorio en GitHub:** <https://github.com/bluefang05/sistema-solar-3d>
+- **Preview alternativo:** <https://firuhs07k5qvw.space.mcode.io>
 
 ## Ejecutar en local
 
