@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sistema Solar 3D — Simulación orbital en tiempo real</title>
+<meta name="description" content="Simulación 3D del sistema solar en HTML5 y WebGL. Órbitas elípticas reales calculadas con elementos orbitales J2000 y la ecuación de Kepler, con baricentro solar, precesión, plano de la eclíptica, efemérides lunares reales y escala real de distancias." />
+<meta name="theme-color" content="#04060c" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Sistema Solar 3D" />
+<meta property="og:description" content="El sistema solar en 3D: órbitas reales, fondo galáctico en movimiento y datos astronómicos verificados." />
+<link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+
+<canvas id="scene"></canvas>
+<div id="labels" class="labels"></div>
+
+<header class="panel panel-title">
+  <h1>SISTEMA SOLAR <span>3D</span></h1>
+  <p class="sub">Órbitas elípticas reales · elementos J2000 · solver de Kepler</p>
+  <p class="sub dim">El Sol y sus planetas avanzan juntos por el espacio mientras el fondo galáctico gira detrás</p>
+</header>
+
+<section class="panel panel-moon" id="moonPanel">
+  <canvas id="moonCanvas" width="132" height="132"></canvas>
+  <div class="moon-info">
+    <strong id="moonPhase">—</strong>
+    <span id="moonIllum">—</span>
+    <span id="moonAge" class="dim">—</span>
+  </div>
+</section>
+
+<section class="panel panel-body hidden" id="infoPanel">
+  <div class="info-head">
+    <span class="dot" id="infoDot"></span>
+    <h2 id="infoName">—</h2>
+  </div>
+  <dl id="infoList">
+    <div><dt id="infoDistLabel">Distancia al Sol</dt><dd id="infoDist">—</dd></div>
+    <div><dt>Periodo orbital</dt><dd id="infoPeriod">—</dd></div>
+    <div><dt>Radio</dt><dd id="infoRadius">—</dd></div>
+    <div><dt>Gravedad superficial</dt><dd id="infoGrav">—</dd></div>
+    <div><dt>Velocidad de escape</dt><dd id="infoEscape">—</dd></div>
+    <div><dt>Rotación propia</dt><dd id="infoSpin">—</dd></div>
+    <div><dt>Velocidad media</dt><dd id="infoSpeed">—</dd></div>
+    <div><dt>Posición actual</dt><dd id="infoPos">—</dd></div>
+    <div><dt>Órbita</dt><dd id="infoOrbit">—</dd></div>
+    <div><dt>Ley de Kepler T²/a³</dt><dd id="infoKepler">—</dd></div>
+    <div><dt>Efeméride</dt><dd id="infoExtra">—</dd></div>
+  </dl>
+  <p class="curio" id="infoCurio"></p>
+  <button class="btn-ghost" id="btnDeselect">Ver sistema completo</button>
+</section>
+
+<section class="panel panel-planets" id="planetPanel">
+  <h3>Cuerpos</h3>
+  <ul id="planetList"></ul>
+</section>
+
+<section class="panel panel-controls">
+  <div class="ctrl-row">
+    <button id="btnPlay" class="btn-play" aria-label="Pausa">❚❚</button>
+    <div class="ctrl-group">
+      <label for="speed">Velocidad <span id="speedLabel">30 d/s</span></label>
+      <input type="range" id="speed" min="0" max="100" value="55" />
+    </div>
+    <div class="ctrl-group date-group">
+      <label for="dateInput">Fecha simulada (hora local)</label>
+      <div class="date-box">
+        <input type="date" id="dateInput" />
+        <input type="time" aria-label="Hora simulada local" id="timeInput" step="1" />
+      </div>
+    </div>
+    <button class="btn-ghost" id="btnNow">Ahora</button>
+  </div>
+  <div class="ctrl-row toggles">
+    <label class="chk"><input type="checkbox" id="tglOrbits" checked /><span>Órbitas</span></label>
+    <label class="chk"><input type="checkbox" id="tglTrails" checked /><span>Estelas</span></label>
+    <label class="chk"><input type="checkbox" id="tglLabels" checked /><span>Nombres</span></label>
+    <label class="chk"><input type="checkbox" id="tglStars" checked /><span>Estrellas</span></label>
+    <label class="chk"><input type="checkbox" id="tglSky" checked /><span>Fondo en movimiento</span></label>
+    <label class="chk"><input type="checkbox" id="tglDrift" checked /><span>Deriva del sistema</span></label>
+    <label class="chk"><input type="checkbox" id="tglReal" /><span>Escala real</span></label>
+    <label class="chk"><input type="checkbox" id="tglEcliptic" /><span>Plano eclíptico</span></label>
+    <div class="spacer"></div>
+    <button class="btn-ghost sm" data-view="top">Vista superior</button>
+    <button class="btn-ghost sm" data-view="oblique">Vista oblicua</button>
+    <button class="btn-ghost sm" data-view="inner">Sistema interior</button>
+  </div>
+  <p id="modelRange" role="status" hidden>Fuera de 1800–2050: posiciones extrapoladas, sin precisión garantizada.</p>
+  <div class="readout">
+    <span id="readoutDate">—</span>
+    <span id="readoutSpeed">—</span>
+  </div>
+  <p class="scale-note" id="scaleNote">Distancias a escala real: las órbitas están en su proporción verdadera. Los cuerpos aparecen ampliados unas 100 veces — el Sol real ocuparía menos de un píxel.</p>
+</section>
+
+<div class="hint" id="hint">Arrastra para orbitar · rueda para zoom · clic en un planeta</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three.module.min.js"
+  }
+}
+</script>
+<script type="module" src="./js/main.js"></script>
+</body>
+</html>
